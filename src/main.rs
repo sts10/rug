@@ -26,7 +26,13 @@ struct Opt {
 
 fn main() {
     let opt = Opt::from_args();
-    println!("Opt: {:?}", opt);
+    if opt.verbose {
+        println!("Received options: {:?}", opt);
+        match &opt.word_list_file_path {
+            Some(file_path) => println!("Will use word list at {:?}", file_path),
+            None => println!("Will use default word list"),
+        }
+    }
     if opt.maximum_length < 5 {
         eprintln!("Error. Maximum username length must be greater than 5");
         return;
