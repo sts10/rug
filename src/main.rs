@@ -11,7 +11,7 @@ struct Opt {
     #[structopt(short = "v", long = "verbose")]
     verbose: bool,
 
-    /// Provide file with words to generate username from randomly
+    /// Provide a txt file with words to generate username from randomly
     #[structopt(short = "w", long = "words")]
     word_list_file_path: Option<PathBuf>,
 
