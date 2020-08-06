@@ -19,9 +19,13 @@ struct Opt {
     )]
     word_list_file_path: PathBuf,
 
-    /// Provide file with words to generate username from randomly
+    /// Set how many random usernames to output
     #[structopt(short = "c", long = "count", default_value = "10")]
     count: usize,
+
+    /// Set maximum username length
+    #[structopt(short = "m", long = "maximum", default_value = "100")]
+    maximum_length: usize,
 }
 
 fn main() {
