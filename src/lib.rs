@@ -62,12 +62,14 @@ fn make_list(file_path: Option<PathBuf>) -> Vec<String> {
             word_list
         }
         None => {
-            // Bummed I can't make this a Vec<&str> , which I think would help performance
-            let word_list: Vec<String> = include_str!("../word-lists/agile_words.txt")
+            // Bummed I that I have to convert each word to a String, which
+            // likely hurts performance.
+            // To do: Figure out how to keep them as references,
+            // maybe with StringLike
+            include_str!("../word-lists/agile_words.txt")
                 .split('\n')
                 .map(|w| w.to_string())
-                .collect();
-            word_list
+                .collect()
         }
     }
 }
