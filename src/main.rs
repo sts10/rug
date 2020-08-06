@@ -5,7 +5,7 @@ use structopt::StructOpt;
 
 /// rug: Random Username Generator
 #[derive(StructOpt, Debug)]
-#[structopt(name = "fgift")]
+#[structopt(name = "rug")]
 struct Opt {
     /// Prints verbose output, including parameters as received
     #[structopt(short = "v", long = "verbose")]
