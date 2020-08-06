@@ -7,19 +7,22 @@ use std::io::BufReader;
 use std::path::PathBuf;
 use std::str::FromStr;
 
-pub fn get_usernames(wordlist: PathBuf) -> Vec<String> {
-    let word_list = make_list(wordlist);
+pub fn get_usernames(word_list_file_path: PathBuf, count: usize) -> Vec<String> {
+    let word_list = make_list(word_list_file_path);
     let mut usernames = Vec::new();
-    for _count in 1..=10 {
-        usernames.push(format!(
-            "{}{}{}{}",
-            get_random_element(&word_list),
-            get_random_element(&["_".to_string(), "-".to_string(), "".to_string()]),
-            get_random_element(&word_list),
-            rand::thread_rng().gen_range(0, 999)
-        ));
+    for _n in 1..=count {
+        usernames.push(make_username(&word_list));
     }
     usernames
+}
+fn make_username(word_list: &Vec<String>) -> String {
+    format!(
+        "{}{}{}{}",
+        get_random_element(&word_list),
+        get_random_element(&["_".to_string(), "-".to_string(), "".to_string()]),
+        get_random_element(&word_list),
+        rand::thread_rng().gen_range(0, 999)
+    )
 }
 
 fn make_list(file_path: PathBuf) -> Vec<String> {
