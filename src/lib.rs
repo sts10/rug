@@ -8,7 +8,7 @@ use std::path::PathBuf;
 use std::str::FromStr;
 
 pub fn get_usernames(
-    word_list_file_path: PathBuf,
+    word_list_file_path: Option<PathBuf>,
     count: usize,
     maximum_length: usize,
 ) -> Vec<String> {
@@ -48,16 +48,28 @@ fn make_username(word_list: &[String], maximum_length: usize) -> String {
     }
 }
 
-fn make_list(file_path: PathBuf) -> Vec<String> {
-    let file_input: Vec<String> = match read_by_line(file_path) {
-        Ok(r) => r,
-        Err(e) => panic!("Error reading word list file: {}", e),
-    };
-    let mut word_list: Vec<String> = vec![];
-    for line in file_input {
-        word_list.push(line);
+fn make_list(file_path: Option<PathBuf>) -> Vec<String> {
+    match file_path {
+        Some(file_path) => {
+            let file_input: Vec<String> = match read_by_line(file_path) {
+                Ok(r) => r,
+                Err(e) => panic!("Error reading word list file: {}", e),
+            };
+            let mut word_list: Vec<String> = vec![];
+            for line in file_input {
+                word_list.push(line);
+            }
+            word_list
+        }
+        None => {
+            // Bummed I can't make this a Vec<&str> , which I think would help performance
+            let word_list: Vec<String> = include_str!("../word-lists/agile_words.txt")
+                .split('\n')
+                .map(|w| w.to_string())
+                .collect();
+            word_list
+        }
     }
-    word_list
 }
 
 fn get_random_element(word_list: &[String]) -> String {

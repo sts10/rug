@@ -12,12 +12,8 @@ struct Opt {
     verbose: bool,
 
     /// Provide file with words to generate username from randomly
-    #[structopt(
-        short = "w",
-        long = "words",
-        default_value = "word-lists/agile_words.txt"
-    )]
-    word_list_file_path: PathBuf,
+    #[structopt(short = "w", long = "words")]
+    word_list_file_path: Option<PathBuf>,
 
     /// Set how many random usernames to output
     #[structopt(short = "c", long = "count", default_value = "10")]
