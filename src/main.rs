@@ -23,7 +23,7 @@ struct Opt {
     #[structopt(short = "c", long = "count", default_value = "10")]
     count: usize,
 
-    /// Set maximum username length
+    /// Set maximum username length. Must be greater than 5.
     #[structopt(short = "m", long = "maximum", default_value = "100")]
     maximum_length: usize,
 }
@@ -31,7 +31,11 @@ struct Opt {
 fn main() {
     let opt = Opt::from_args();
     println!("Opt: {:?}", opt);
-    let usernames = get_usernames(opt.word_list_file_path, opt.count);
+    if opt.maximum_length < 5 {
+        eprintln!("Error. Maximum username length must be greater than 5");
+        return;
+    }
+    let usernames = get_usernames(opt.word_list_file_path, opt.count, opt.maximum_length);
     for username in usernames {
         println!("{}", username);
     }
