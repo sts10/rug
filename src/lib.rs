@@ -19,7 +19,7 @@ pub fn get_usernames(
     }
     usernames
 }
-fn make_username(word_list: &Vec<String>, maximum_length: usize) -> String {
+fn make_username(word_list: &[String], maximum_length: usize) -> String {
     if maximum_length > 10 {
         let username = format!(
             "{}{}{}{}",
@@ -86,11 +86,11 @@ where
     Ok(vec)
 }
 
-fn is_compound_safe(username: &str, wordlist: &Vec<String>) -> bool {
+fn is_compound_safe(username: &str, wordlist: &[String]) -> bool {
     for word in wordlist {
-        if word == &username {
+        if word == username {
             return false;
         }
     }
-    return true;
+    true
 }
