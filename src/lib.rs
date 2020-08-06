@@ -29,7 +29,7 @@ fn make_username(word_list: &Vec<String>, maximum_length: usize) -> String {
             rand::thread_rng().gen_range(0, 999)
         );
         // could also check the compound problem here?
-        if username.len() > maximum_length {
+        if username.len() > maximum_length || !is_compound_safe(&username, word_list) {
             make_username(word_list, maximum_length)
         } else {
             username
@@ -84,4 +84,13 @@ where
         }
     }
     Ok(vec)
+}
+
+fn is_compound_safe(username: &str, wordlist: &Vec<String>) -> bool {
+    for word in wordlist {
+        if word == &username {
+            return false;
+        }
+    }
+    return true;
 }
