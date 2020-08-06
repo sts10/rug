@@ -1,5 +1,4 @@
 use rand::seq::SliceRandom;
-
 use rand::Rng;
 use std::fs::File;
 use std::io;
@@ -9,9 +8,8 @@ use std::path::PathBuf;
 use std::str::FromStr;
 
 pub fn get_usernames(wordlist: PathBuf) -> Vec<String> {
-    let word_list = make_list("word-lists/agile_words.txt");
+    let word_list = make_list(wordlist);
     let mut usernames = Vec::new();
-    println!("Some randomly generated usernames are:\n");
     for _count in 1..=10 {
         usernames.push(format!(
             "{}{}{}{}",
@@ -20,18 +18,11 @@ pub fn get_usernames(wordlist: PathBuf) -> Vec<String> {
             get_random_element(&word_list),
             rand::thread_rng().gen_range(0, 999)
         ));
-        // println!(
-        //     "{}{}{}{}",
-        //     get_random_element(&word_list),
-        //     get_random_element(&["_".to_string(), "-".to_string(), "".to_string()]),
-        //     get_random_element(&word_list),
-        //     rand::thread_rng().gen_range(0, 999)
-        // );
     }
     usernames
 }
 
-fn make_list(file_path: &str) -> Vec<String> {
+fn make_list(file_path: PathBuf) -> Vec<String> {
     let file_input: Vec<String> = match read_by_line(file_path) {
         Ok(r) => r,
         Err(e) => panic!("Error reading word list file: {}", e),
@@ -50,12 +41,12 @@ fn get_random_element(word_list: &[String]) -> String {
     }
 }
 
-fn read_by_line<T: FromStr>(file_path: &str) -> io::Result<Vec<T>>
+fn read_by_line<T: FromStr>(file_path: PathBuf) -> io::Result<Vec<T>>
 where
     <T as std::str::FromStr>::Err: std::fmt::Debug,
 {
     let mut vec = Vec::new();
-    let f = match File::open(file_path.trim_matches(|c| c == '\'' || c == ' ')) {
+    let f = match File::open(file_path) {
         Ok(res) => res,
         Err(e) => return Err(e),
     };
