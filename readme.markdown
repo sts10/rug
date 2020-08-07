@@ -40,8 +40,9 @@ If the `maximum` option is set less than 11, rug will only pull one word from th
 ## Usage examples
 
 - `rug` generates 10 random usernames from included word list (see below)
-- `rug -w path/to/a/custom_wordlist.txt` generates 10 random usernames using words from provide txt file, where each word is on its own line
+- `rug -l path/to/a/custom_wordlist.txt` generates 10 random usernames using words from provided `.txt` file, where each word is on its own line
 - `rug -n 5 -m 12` generates 5 random usernames with a maximum length of 12 characters.
+>>>>>>> 62011e9cb9745497a41711662d8849c6b43409b5
 
 ## Installation
 
