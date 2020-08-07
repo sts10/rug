@@ -12,66 +12,68 @@ pub fn get_usernames(
     number_to_print: usize,
     maximum_length: usize,
 ) -> Vec<String> {
-    let word_list = make_list(list_file_path);
+    let (word_list1, word_list2) = match list_file_path {
+        Some(list_file_path) => (make_list(&list_file_path), make_list(&list_file_path)),
+        None => make_default_lists(),
+    };
     let mut usernames = Vec::new();
     for _n in 1..=number_to_print {
-        usernames.push(make_username(&word_list, maximum_length));
+        usernames.push(make_username(&word_list1, &word_list2, maximum_length));
     }
     usernames
 }
-fn make_username(word_list: &[String], maximum_length: usize) -> String {
+fn make_username(word_list1: &[String], word_list2: &[String], maximum_length: usize) -> String {
     if maximum_length > 10 {
         let username = format!(
             "{}{}{}{}",
-            get_random_element(&word_list).trim_end(),
+            get_random_element(&word_list1).trim_end(),
             get_random_element(&["_".to_string(), "-".to_string(), "".to_string()]),
-            get_random_element(&word_list).trim_end(),
+            get_random_element(&word_list2).trim_end(),
             rand::thread_rng().gen_range(0, 999)
         );
         // could also check the compound problem here?
         if username.len() > maximum_length {
-            make_username(word_list, maximum_length)
+            make_username(word_list1, word_list2, maximum_length)
         } else {
             username
         }
     } else {
         let username = format!(
             "{}{}",
-            get_random_element(&word_list).trim_end(),
+            get_random_element(&word_list2).trim_end(),
             rand::thread_rng().gen_range(0, 999)
         );
         if username.len() > maximum_length {
-            make_username(word_list, maximum_length)
+            make_username(word_list1, word_list2, maximum_length)
         } else {
             username
         }
     }
 }
 
-fn make_list(file_path: Option<PathBuf>) -> Vec<String> {
-    match file_path {
-        Some(file_path) => {
-            let file_input: Vec<String> = match read_by_line(file_path) {
-                Ok(r) => r,
-                Err(e) => panic!("Error reading word list file: {}", e),
-            };
-            let mut word_list: Vec<String> = vec![];
-            for line in file_input {
-                word_list.push(line);
-            }
-            word_list
-        }
-        None => {
-            // Bummed I that I have to convert each word to a String, which
-            // likely hurts performance.
-            // To do: Figure out how to keep them as references,
-            // maybe with StringLike
-            include_str!("../word-lists/default_list.txt")
-                .split('\n')
-                .map(|w| w.to_string())
-                .collect()
-        }
+fn make_list(file_path: &PathBuf) -> Vec<String> {
+    let file_input: Vec<String> = match read_by_line(file_path.to_path_buf()) {
+        Ok(r) => r,
+        Err(e) => panic!("Error reading word list file: {}", e),
+    };
+    let mut word_list: Vec<String> = vec![];
+    for line in file_input {
+        word_list.push(line);
     }
+    word_list
+}
+
+fn make_default_lists() -> (Vec<String>, Vec<String>) {
+    (
+        include_str!("../word-lists/adjectives.txt")
+            .split('\n')
+            .map(|w| w.to_string())
+            .collect(),
+        include_str!("../word-lists/nouns.txt")
+            .split('\n')
+            .map(|w| w.to_string())
+            .collect(),
+    )
 }
 
 fn get_random_element(word_list: &[String]) -> String {
