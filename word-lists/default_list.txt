@@ -2245,7 +2245,6 @@ canasta
 canberra
 cancan
 cancel
-cancer
 candela
 candid
 candied
@@ -9581,12 +9580,8 @@ nicosia
 nicotine
 niece
 nifty
-niger
 nigeria
 nigerian
-niggard
-niggle
-niggling
 nigh
 nightcap
 nightly

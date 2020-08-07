@@ -50,6 +50,6 @@ If the `maximum` option is set less than 11, rug will only pull one word from th
 
 ## Note on the included word lists
 
-If no word list is provided, rug uses a 16,103-word list adapted from [an AgileBits word list](https://github.com/agilebits/crackme/blob/master/doc/AgileWords.txt). 
+If no word list is provided, rug uses a 16,098-word list adapted from [an AgileBits word list](https://github.com/agilebits/crackme/blob/master/doc/AgileWords.txt). 
 
 A copy of the [EFF long word list](https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt) (7,776 words) is included in the repo as well. Of course you can use your word list with the `--words` option.
