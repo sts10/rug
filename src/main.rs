@@ -11,13 +11,13 @@ struct Opt {
     #[structopt(short = "v", long = "verbose")]
     verbose: bool,
 
-    /// Provide a txt file with words to generate username from randomly
-    #[structopt(short = "w", long = "words")]
-    word_list_file_path: Option<PathBuf>,
+    /// Provide a txt file with a list of words to generate username from randomly
+    #[structopt(short = "l", long = "list")]
+    list_file_path: Option<PathBuf>,
 
     /// Set how many random usernames to output
-    #[structopt(short = "c", long = "count", default_value = "10")]
-    count: usize,
+    #[structopt(short = "n", long = "number", default_value = "10")]
+    number_to_print: usize,
 
     /// Set maximum username length. Must be greater than 5.
     #[structopt(short = "m", long = "maximum", default_value = "100")]
@@ -28,7 +28,7 @@ fn main() {
     let opt = Opt::from_args();
     if opt.verbose {
         println!("Received options: {:?}", opt);
-        match &opt.word_list_file_path {
+        match &opt.list_file_path {
             Some(file_path) => println!("Will use word list at {:?}", file_path),
             None => println!("Will use default word list"),
         }
@@ -37,7 +37,7 @@ fn main() {
         eprintln!("Error. Maximum username length must be greater than 5");
         return;
     }
-    let usernames = get_usernames(opt.word_list_file_path, opt.count, opt.maximum_length);
+    let usernames = get_usernames(opt.list_file_path, opt.number_to_print, opt.maximum_length);
     for username in usernames {
         println!("{}", username);
     }

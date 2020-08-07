@@ -8,13 +8,13 @@ use std::path::PathBuf;
 use std::str::FromStr;
 
 pub fn get_usernames(
-    word_list_file_path: Option<PathBuf>,
-    count: usize,
+    list_file_path: Option<PathBuf>,
+    number_to_print: usize,
     maximum_length: usize,
 ) -> Vec<String> {
-    let word_list = make_list(word_list_file_path);
+    let word_list = make_list(list_file_path);
     let mut usernames = Vec::new();
-    for _n in 1..=count {
+    for _n in 1..=number_to_print {
         usernames.push(make_username(&word_list, maximum_length));
     }
     usernames
@@ -23,13 +23,13 @@ fn make_username(word_list: &[String], maximum_length: usize) -> String {
     if maximum_length > 10 {
         let username = format!(
             "{}{}{}{}",
-            get_random_element(&word_list),
+            get_random_element(&word_list).trim_end(),
             get_random_element(&["_".to_string(), "-".to_string(), "".to_string()]),
-            get_random_element(&word_list),
+            get_random_element(&word_list).trim_end(),
             rand::thread_rng().gen_range(0, 999)
         );
         // could also check the compound problem here?
-        if username.len() > maximum_length || !is_compound_safe(&username, word_list) {
+        if username.len() > maximum_length {
             make_username(word_list, maximum_length)
         } else {
             username
@@ -37,7 +37,7 @@ fn make_username(word_list: &[String], maximum_length: usize) -> String {
     } else {
         let username = format!(
             "{}{}",
-            get_random_element(&word_list),
+            get_random_element(&word_list).trim_end(),
             rand::thread_rng().gen_range(0, 999)
         );
         if username.len() > maximum_length {
@@ -66,7 +66,7 @@ fn make_list(file_path: Option<PathBuf>) -> Vec<String> {
             // likely hurts performance.
             // To do: Figure out how to keep them as references,
             // maybe with StringLike
-            include_str!("../word-lists/agile_words.txt")
+            include_str!("../word-lists/default_list.txt")
                 .split('\n')
                 .map(|w| w.to_string())
                 .collect()
@@ -98,13 +98,4 @@ where
         }
     }
     Ok(vec)
-}
-
-fn is_compound_safe(username: &str, wordlist: &[String]) -> bool {
-    for word in wordlist {
-        if word == username {
-            return false;
-        }
-    }
-    true
 }
