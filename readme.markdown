@@ -5,13 +5,13 @@ Generates random usernames from a given word list.
 ```text
 $ rug
 barbecuedreliance655
-unfathomableguilt521
 ace_conduit879
-ongoinguser28
-simianratio936
+overdressed_leftover489
+ill-considered_monopolization726
 phantomsuspect347
-insecticidal-glamorization152
-carcinogenic-hydroponics23
+badlevel251
+precautionarywesterner537
+horse-drawn_futility393
 incompatiblecontingent628
 vapid_protea736
 ```
@@ -34,7 +34,7 @@ OPTIONS:
     -n, --number <number-to-print>    Set how many random usernames to output [default: 10]
 ```
 
-If the `maximum` option is set less than 11, rug will only pull one word from the word list. If it's set at 11 or more, it will pull two words from the word list.
+If the `maximum` option is set less than 11, rug will only pull one word from the word list. If it's set to 11 or higher, it will pull two words from the word list.
 
 **Note**: This program is NOT intended to be used to create secure passwords. **Do NOT use this program to create passwords.**
 
@@ -52,7 +52,7 @@ If the `maximum` option is set less than 11, rug will only pull one word from th
 
 ## Changelog
 
-**0.4.0**: Aas of this version, by default, rug uses two word lists from the [SecureDrop project](https://github.com/freedomofpress/securedrop/). Since that project uses the AGPL v3 License, I'm also using that License for rug from this version forward. Previous versions of rug used the MIT License.
+**0.4.0**: As of v 0.4.0, by default, rug uses two word lists from the [SecureDrop project](https://github.com/freedomofpress/securedrop/). Since that project uses the AGPLv3 License, I'm also using that License for rug from this version forward. Previous versions of rug used the MIT License.
 
 ## On the included word lists
 
