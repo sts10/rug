@@ -8,5 +8,4 @@ edition = "2018"
 
 [dependencies]
 rand = "0.7"
-csv = "1"
 structopt = "0.3"
