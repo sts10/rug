@@ -1,6 +1,6 @@
 [package]
 name = "rug"
-version = "0.4.0"
+version = "0.4.10"
 authors = ["sts10 <sschlinkert@gmail.com>"]
 edition = "2018"
 
