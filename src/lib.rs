@@ -11,6 +11,7 @@ pub fn get_usernames(
     list_file_path: Option<PathBuf>,
     number_to_print: usize,
     maximum_length: usize,
+    title_case: bool,
 ) -> Vec<String> {
     let (word_list1, word_list2) = match list_file_path {
         Some(list_file_path) => (make_list(&list_file_path), make_list(&list_file_path)),
@@ -18,33 +19,53 @@ pub fn get_usernames(
     };
     let mut usernames = Vec::new();
     for _n in 1..=number_to_print {
-        usernames.push(make_username(&word_list1, &word_list2, maximum_length));
+        usernames.push(make_username(
+            &word_list1,
+            &word_list2,
+            maximum_length,
+            title_case,
+        ));
     }
     usernames
 }
-fn make_username(word_list1: &[String], word_list2: &[String], maximum_length: usize) -> String {
+fn make_username(
+    word_list1: &[String],
+    word_list2: &[String],
+    maximum_length: usize,
+    title_case: bool,
+) -> String {
+    let (word1, word2) = (
+        get_random_element(&word_list1),
+        get_random_element(&word_list2),
+    );
+    // check if we need to make the words title case
+    let (word1, word2) = if title_case {
+        (make_title_case(&word1), make_title_case(&word2))
+    } else {
+        (word1, word2)
+    };
+
     if maximum_length > 10 {
         let username = format!(
             "{}{}{}{}",
-            get_random_element(&word_list1).trim_end(),
+            word1.trim_end(),
             get_random_element(&["_".to_string(), "-".to_string(), "".to_string()]),
-            get_random_element(&word_list2).trim_end(),
+            word2.trim_end(),
             rand::thread_rng().gen_range(0, 999)
         );
-        // could also check the compound problem here?
         if username.len() > maximum_length {
-            make_username(word_list1, word_list2, maximum_length)
+            make_username(word_list1, word_list2, maximum_length, title_case)
         } else {
             username
         }
     } else {
         let username = format!(
             "{}{}",
-            get_random_element(&word_list2).trim_end(),
+            word2.trim_end(),
             rand::thread_rng().gen_range(0, 999)
         );
         if username.len() > maximum_length {
-            make_username(word_list1, word_list2, maximum_length)
+            make_username(word_list1, word_list2, maximum_length, title_case)
         } else {
             username
         }
@@ -100,4 +121,12 @@ where
         }
     }
     Ok(vec)
+}
+
+fn make_title_case(s: &str) -> String {
+    let mut c = s.chars();
+    match c.next() {
+        None => String::new(),
+        Some(f) => f.to_uppercase().collect::<String>() + c.as_str(),
+    }
 }

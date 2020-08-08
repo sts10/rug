@@ -19,18 +19,19 @@ vapid_protea736
 ## Usage
 
 ```text
-USAGE:                                                                   
-rug [FLAGS] [OPTIONS]                                                
-                                                                     
-FLAGS:                                                                   
--h, --help       Prints help information                             
--V, --version    Prints version information                          
--v, --verbose    Prints verbose output, including parameters as received                                                                      
-                                                                     
-OPTIONS:                                                                 
--l, --list <list-file-path>       Provide a txt file with a list of words to generate username from randomly                                  
--m, --maximum <maximum-length>    Set maximum username length. Must be greater than 5 [default: 100]                                          
--n, --number <number-to-print>    Set how many random usernames to output [default: 10]   
+USAGE:
+    rug [FLAGS] [OPTIONS]
+
+FLAGS:
+    -h, --help          Prints help information
+    -t, --title-case    Uses Title Case for words in generated usernames
+    -V, --version       Prints version information
+    -v, --verbose       Prints verbose output, including parameters as received
+
+OPTIONS:
+    -l, --list <list-file-path>       Provide a txt file with a list of words to generate username from randomly
+    -m, --maximum <maximum-length>    Set maximum username length. Must be greater than 5 [default: 100]
+    -n, --number <number-to-print>    Set how many random usernames to output [default: 10]
 ```
 
 If the `maximum` option is set less than 11, rug will only pull one word from the word list. If it's set at 11 or more, it will pull two words from the word list.
@@ -42,6 +43,7 @@ If the `maximum` option is set less than 11, rug will only pull one word from th
 - `rug` generates 10 random usernames from included word lists (see below)
 - `rug -l path/to/a/custom_wordlist.txt` generates 10 random usernames using words from provided `.txt` file, where each word is on its own line
 - `rug -n 5 -m 12` generates 5 random usernames with a maximum length of 12 characters.
+- `rug -n 5 -t` generates 5 random usernames where each word is in Title Case.
 
 ## Installation
 

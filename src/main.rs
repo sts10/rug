@@ -22,6 +22,10 @@ struct Opt {
     /// Set maximum username length. Must be greater than 5.
     #[structopt(short = "m", long = "maximum", default_value = "100")]
     maximum_length: usize,
+
+    /// Uses Title Case for words in generated usernames
+    #[structopt(short = "t", long = "title-case")]
+    title_case: bool,
 }
 
 fn main() {
@@ -37,7 +41,12 @@ fn main() {
         eprintln!("Error. Maximum username length must be greater than 5");
         return;
     }
-    let usernames = get_usernames(opt.list_file_path, opt.number_to_print, opt.maximum_length);
+    let usernames = get_usernames(
+        opt.list_file_path,
+        opt.number_to_print,
+        opt.maximum_length,
+        opt.title_case,
+    );
     for username in usernames {
         println!("{}", username);
     }
