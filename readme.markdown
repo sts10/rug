@@ -1,4 +1,8 @@
+**This project has moved to [https://github.com/sts10/nametag](https://github.com/sts10/nametag)**
+
 # Rug (Random Username Generator)
+
+**This project has moved**
 
 Generates random usernames from a given word list.
 
